@@ -2,7 +2,7 @@
 
 ## Understanding the Spring Petclinic application with a few diagrams
 
-[See the presentation here](https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application)
+This is the spring ai version for spring petclinic, if you want to see a langchain4j version, please refer to [spring-petclinic-langchain4j](https://github.com/showpune/spring-petclinic-langchain4j)
 
 ## Run Petclinic locally
 
