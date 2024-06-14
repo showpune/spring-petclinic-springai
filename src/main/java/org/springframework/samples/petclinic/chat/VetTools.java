@@ -17,6 +17,8 @@ package org.springframework.samples.petclinic.chat;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -39,16 +41,18 @@ public class VetTools {
 	}
 
 	@Bean
-	@Description("return list of Vets, include their specialist")
+	@Description("return list of Vets, include their specialties")
 	public Function<Request, Collection<Vet>> queryVets() {
 		return request -> {
 			return vetRepository.findAll();
 		};
 	}
 
+
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonClassDescription("Vet Query Request")
-	public record Request() {
+	@JsonClassDescription("Query vets request")
+	public record Request(@JsonProperty(required = false,
+		value = "specialty") @JsonPropertyDescription("The specialty") String specialty) {
 	}
 
 }

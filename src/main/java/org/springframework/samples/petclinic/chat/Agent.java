@@ -1,12 +1,20 @@
 package org.springframework.samples.petclinic.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
@@ -21,26 +29,48 @@ public class Agent {
 	@Autowired
 	private VectorStore vectorStore;
 
-	public String chat(String userMessage, String username) {
-		List<Document> docs = vectorStore.similaritySearch(userMessage);
-		StringBuffer sop = new StringBuffer();
-		for (Document doc : docs) {
-			sop.append(doc.getContent()).append("\n");
-		}
+	@Value("classpath:/prompts/system-message.st")
+	private Resource systemResource;
 
-		Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
-			advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
-		};
-		return chatClient
-			.prompt()
-			.advisors(advisorSpecConsumer)
-			.user(userMessage + "\n" + sop)
-			.system("You are a customer support agent of a pet clinic. You will answer question from a petclinic customer."
-				+ "you will always answer the customer question according to Pet clinic Terms of Use \n"
-				+ "The customer last name is " + username)
-			.functions("queryOwners")
-			.call()
-			.content();
+	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. " +
+		"but they should all retain the original meaning. " +
+		"It will be used to retrieve relevant documents from a English document. " +
+		"Without enumerations, hyphens, or any additional formatting!";
+
+	public String chat(String userMessage, String username) {
+
+		try {
+			String processedDocument = chatClient
+				.prompt().system(TRANSLATE).user(userMessage).call().content();
+
+			List<Document> docs = vectorStore.similaritySearch(processedDocument);
+			StringBuilder sop = new StringBuilder();
+			for (Document doc : docs) {
+				sop.append(doc.getContent()).append("\n");
+			}
+
+			Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
+				advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
+			};
+
+			PromptTemplate systemPromptTemplate = new SystemPromptTemplate(systemResource);
+			Map<String, Object> systemParameters = new HashMap<>() {{
+				put("username", username);
+			}};
+
+			return chatClient
+				.prompt()
+				//userName as memory key
+				.advisors(advisorSpecConsumer)
+				.system(systemPromptTemplate.render(systemParameters))
+				.messages(new UserMessage(sop.toString()))
+				.user(userMessage)
+				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
+				.call()
+				.content();
+		} catch(Exception e) {
+			return "Sorry, I am not able to help you with that.";
+		}
 	}
 
 }
