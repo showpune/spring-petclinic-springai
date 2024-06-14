@@ -1,4 +1,4 @@
-# Spring PetClinic Sample Application With OpenAI and Langchain4j
+# Spring PetClinic Sample Application With Azure OpenAI and springAi
 
 ## Understanding the Spring Petclinic application with a few diagrams
 
@@ -42,12 +42,14 @@ And the OpenAI chatbot at <http://localhost:8080/chat.html>.
 <img width="1042" alt="petclinic-screenshot" src="https://github.com/showpune/spring-petclinic-langchain4j/assets/1787505/11caef70-6411-4e72-9ae9-4902fb8ac96b">
 
 ## Workthrough of the chat agent
+Go to the owner page, you can query all owner information of "Davis"
+![image](https://github.com/showpune/spring-petclinic-springai/assets/1787505/ab3f7f10-a006-46c6-a363-637ea538bd5e)
 
-You can talk with the agent, it can help to recommend the vet according to the symptoms of the pet. The agent can also
-help to book an appointment with the vet.
-![image](https://github.com/showpune/spring-petclinic-langchain4j/assets/1787505/e158ca83-0ada-4f8c-8843-6055b9cb017f)
-Go to the owner page, you can see you are registered as an owner with the help of the agent
-![image](https://github.com/showpune/spring-petclinic-langchain4j/assets/1787505/e7da4ede-5405-437d-a35f-fcd60af45ba7)
+
+You can also talk with the agent, query your information.
+![image](https://github.com/showpune/spring-petclinic-springai/assets/1787505/2591e97b-aee8-4dfc-85d8-5b62691a2c13)
+
+
 
 ## License
 
