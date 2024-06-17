@@ -8,7 +8,6 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -23,19 +22,16 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 @Component
 public class Agent {
 
-	@Autowired
-	private ChatClient chatClient;
-
-	@Autowired
-	private VectorStore vectorStore;
-
-	@Value("classpath:/prompts/system-message.st")
-	private Resource systemResource;
-
 	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. " +
 		"but they should all retain the original meaning. " +
 		"It will be used to retrieve relevant documents from a English document. " +
 		"Without enumerations, hyphens, or any additional formatting!";
+	@Autowired
+	private ChatClient chatClient;
+	@Autowired
+	private VectorStore vectorStore;
+	@Value("classpath:/prompts/system-message.st")
+	private Resource systemResource;
 
 	public String chat(String userMessage, String username) {
 
@@ -68,7 +64,7 @@ public class Agent {
 				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
 				.call()
 				.content();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return "Sorry, I am not able to help you with that.";
 		}
 	}
