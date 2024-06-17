@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -28,8 +27,6 @@ public class Agent {
 	private ChatClient chatClient;
 
 	@Autowired
-	private ChatModel chatModel;
-	@Autowired
 	private VectorStore vectorStore;
 	@Value("classpath:/prompts/system-message.st")
 	private Resource systemResource;
@@ -37,7 +34,6 @@ public class Agent {
 	public String chat(String userMessage, String username) {
 
 		try {
-			String processedMessage = chatModel.call(TRANSLATE + "\n" + userMessage);
 
 			Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
 				advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
@@ -52,7 +48,7 @@ public class Agent {
 				//userName as memory key
 				.advisors(advisorSpecConsumer)
 				.system(systemPromptTemplate.render(systemParameters))
-				.user(processedMessage)
+				.user(userMessage)
 				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
 				.call()
 				.content();

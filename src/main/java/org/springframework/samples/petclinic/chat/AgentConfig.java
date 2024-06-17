@@ -4,9 +4,9 @@ package org.springframework.samples.petclinic.chat;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientCustomizer;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.reader.TextReader;
@@ -31,9 +31,9 @@ public class AgentConfig {
 	}
 
 	@Bean
-	public ChatClientCustomizer chatClientCustomizer(VectorStore vectorStore) {
+	public ChatClientCustomizer chatClientCustomizer(VectorStore vectorStore, ChatModel model) {
 		ChatMemory chatMemory = new InMemoryChatMemory();
-		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory), new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults()));
+		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory), new ModeledQuestionAnswerAdvisor(vectorStore, SearchRequest.defaults(), model));
 	}
 
 	@Bean
