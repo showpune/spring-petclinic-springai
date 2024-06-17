@@ -2,7 +2,7 @@
 
 ## Understanding the Spring Petclinic application with a few diagrams
 
-[See the presentation here](https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application)
+This is the spring ai version for spring petclinic, if you want to see a langchain4j version, please refer to [spring-petclinic-langchain4j](https://github.com/showpune/spring-petclinic-langchain4j)
 
 ## Run Petclinic locally
 
@@ -49,7 +49,11 @@ Go to the owner page, you can query all owner information of "Davis"
 You can also talk with the agent, query your information.
 ![image](https://github.com/showpune/spring-petclinic-springai/assets/1787505/2591e97b-aee8-4dfc-85d8-5b62691a2c13)
 
+you can also talk with Chinese
+![image](https://github.com/showpune/spring-petclinic-springai/assets/1787505/4a020ba8-5768-424b-b2e6-09812ecf9534)
 
+Go to the owner page you can see your information is added
+![image](https://github.com/showpune/spring-petclinic-springai/assets/1787505/b74b383e-680f-4e7d-ac1c-eaa32bd59c4e)
 
 ## License
 
