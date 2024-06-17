@@ -33,8 +33,7 @@ public class AgentConfig {
 	@Bean
 	public ChatClientCustomizer chatClientCustomizer(VectorStore vectorStore) {
 		ChatMemory chatMemory = new InMemoryChatMemory();
-		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory)
-		, new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults()));
+		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory), new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults()));
 	}
 
 	@Bean

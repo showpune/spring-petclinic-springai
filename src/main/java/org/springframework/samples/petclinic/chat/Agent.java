@@ -1,11 +1,9 @@
 package org.springframework.samples.petclinic.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
-import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +11,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -40,7 +37,7 @@ public class Agent {
 	public String chat(String userMessage, String username) {
 
 		try {
-			String processedMessage = chatModel.call(TRANSLATE+"\n"+userMessage);
+			String processedMessage = chatModel.call(TRANSLATE + "\n" + userMessage);
 
 			Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
 				advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
