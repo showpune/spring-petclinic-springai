@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
@@ -28,6 +29,9 @@ public class Agent {
 		"Without enumerations, hyphens, or any additional formatting!";
 	@Autowired
 	private ChatClient chatClient;
+
+	@Autowired
+	private ChatModel chatModel;
 	@Autowired
 	private VectorStore vectorStore;
 	@Value("classpath:/prompts/system-message.st")
@@ -36,19 +40,11 @@ public class Agent {
 	public String chat(String userMessage, String username) {
 
 		try {
-			String processedDocument = chatClient
-				.prompt().system(TRANSLATE).user(userMessage).call().content();
-
-			List<Document> docs = vectorStore.similaritySearch(processedDocument);
-			StringBuilder sop = new StringBuilder();
-			for (Document doc : docs) {
-				sop.append(doc.getContent()).append("\n");
-			}
+			String processedMessage = chatModel.call(TRANSLATE+"\n"+userMessage);
 
 			Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
 				advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
 			};
-
 			PromptTemplate systemPromptTemplate = new SystemPromptTemplate(systemResource);
 			Map<String, Object> systemParameters = new HashMap<>() {{
 				put("username", username);
@@ -59,8 +55,7 @@ public class Agent {
 				//userName as memory key
 				.advisors(advisorSpecConsumer)
 				.system(systemPromptTemplate.render(systemParameters))
-				.messages(new UserMessage(sop.toString()))
-				.user(userMessage)
+				.user(processedMessage)
 				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
 				.call()
 				.content();
