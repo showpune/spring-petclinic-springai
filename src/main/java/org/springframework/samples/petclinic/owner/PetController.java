@@ -61,7 +61,7 @@ class PetController {
 
 	@ModelAttribute("pet")
 	public Pet findPet(@PathVariable("ownerId") int ownerId,
-					   @PathVariable(name = "petId", required = false) Integer petId) {
+			@PathVariable(name = "petId", required = false) Integer petId) {
 
 		if (petId == null) {
 			return new Pet();
@@ -94,7 +94,7 @@ class PetController {
 
 	@PostMapping("/pets/new")
 	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model,
-									  RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) {
 		if (StringUtils.hasText(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
 			result.rejectValue("name", "duplicate", "already exists");
 		}
@@ -117,7 +117,7 @@ class PetController {
 
 	@GetMapping("/pets/{petId}/edit")
 	public String initUpdateForm(Owner owner, @PathVariable("petId") int petId, ModelMap model,
-								 RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) {
 		Pet pet = owner.getPet(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -125,7 +125,7 @@ class PetController {
 
 	@PostMapping("/pets/{petId}/edit")
 	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model,
-									RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) {
 
 		String petName = pet.getName();
 

@@ -44,8 +44,8 @@ public class OwnerTools {
 
 	@Bean
 	@Description("Query the owners by last name, the owner information include owner id, address, telephone, city, first name and last name"
-		+ "\n The owner also include the pets information, include the pet name, pet type and birth"
-		+ "\n The pet include serveral visit record, include the visit name and visit date")
+			+ "\n The owner also include the pets information, include the pet name, pet type and birth"
+			+ "\n The pet include serveral visit record, include the visit name and visit date")
 	public Function<OwnerQueryRequest, List<Owner>> queryOwners() {
 		return name -> {
 			Pageable pageable = PageRequest.of(0, 10);
@@ -93,22 +93,25 @@ public class OwnerTools {
 		};
 	}
 
-
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@JsonClassDescription("Owner Query Request")
 	public record OwnerQueryRequest(@JsonProperty(required = false,
-		value = "lastName") @JsonPropertyDescription("The Owner last name") String lastName) {
+			value = "lastName") @JsonPropertyDescription("The Owner last name") String lastName) {
 	}
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@JsonClassDescription("Owner Create or Update Request. If ownerId is provided, it will be treated as update, otherwise create.")
 	public record OwnerCURequest(
-		@JsonProperty(required = false, value = "ownerId") @JsonPropertyDescription("The Owner Id") String ownerId,
-		@JsonProperty(required = true, value = "lastName") @JsonPropertyDescription("The Owner last name") String lastName,
-		@JsonProperty(required = true, value = "firstName") @JsonPropertyDescription("The Owner First name") String firstName,
-		@JsonProperty(required = true, value = "address") @JsonPropertyDescription("The Owner address") String address,
-		@JsonProperty(required = true, value = "telephone") @JsonPropertyDescription("The Owner telephone") String telephone,
-		@JsonProperty(required = true, value = "city") @JsonPropertyDescription("The Owner city") String city) {
+			@JsonProperty(required = false, value = "ownerId") @JsonPropertyDescription("The Owner Id") String ownerId,
+			@JsonProperty(required = true,
+					value = "lastName") @JsonPropertyDescription("The Owner last name") String lastName,
+			@JsonProperty(required = true,
+					value = "firstName") @JsonPropertyDescription("The Owner First name") String firstName,
+			@JsonProperty(required = true,
+					value = "address") @JsonPropertyDescription("The Owner address") String address,
+			@JsonProperty(required = true,
+					value = "telephone") @JsonPropertyDescription("The Owner telephone") String telephone,
+			@JsonProperty(required = true, value = "city") @JsonPropertyDescription("The Owner city") String city) {
 	}
 
 }

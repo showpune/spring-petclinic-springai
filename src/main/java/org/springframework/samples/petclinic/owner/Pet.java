@@ -39,9 +39,11 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "pet_id")
 	@OrderBy("visit_date ASC")
 	private final Set<Visit> visits = new LinkedHashSet<>();
+
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthDate;
+
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;

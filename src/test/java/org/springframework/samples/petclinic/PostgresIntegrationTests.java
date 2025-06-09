@@ -47,8 +47,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {"spring.docker.compose.skip.in-tests=false", //
-	"spring.docker.compose.profiles.active=postgres"})
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = { "spring.docker.compose.skip.in-tests=false", //
+		"spring.docker.compose.profiles.active=postgres" })
 @ActiveProfiles("postgres")
 @DisabledInNativeImage
 public class PostgresIntegrationTests {
@@ -71,7 +71,7 @@ public class PostgresIntegrationTests {
 		new SpringApplicationBuilder(PetClinicApplication.class) //
 			.profiles("postgres") //
 			.properties( //
-				"spring.docker.compose.profiles.active=postgres" //
+					"spring.docker.compose.profiles.active=postgres" //
 			) //
 			.listeners(new PropertiesLogger()) //
 			.run(args);
@@ -117,7 +117,8 @@ public class PostgresIntegrationTests {
 					String value = source.getProperty(name).toString();
 					if (resolved.equals(value)) {
 						log.info(name + "=" + resolved);
-					} else {
+					}
+					else {
 						log.info(name + "=" + value + " OVERRIDDEN to " + resolved);
 					}
 				}

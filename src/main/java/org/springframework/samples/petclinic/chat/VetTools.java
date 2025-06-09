@@ -48,11 +48,10 @@ public class VetTools {
 		};
 	}
 
-
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@JsonClassDescription("Query vets request")
 	public record Request(@JsonProperty(required = false,
-		value = "specialty") @JsonPropertyDescription("The specialty") String specialty) {
+			value = "specialty") @JsonPropertyDescription("The specialty") String specialty) {
 	}
 
 }

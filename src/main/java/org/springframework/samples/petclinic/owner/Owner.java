@@ -42,12 +42,15 @@ public class Owner extends Person {
 	@JoinColumn(name = "owner_id")
 	@OrderBy("name")
 	private final List<Pet> pets = new ArrayList<>();
+
 	@Column(name = "address")
 	@NotBlank
 	private String address;
+
 	@Column(name = "city")
 	@NotBlank
 	private String city;
+
 	@Column(name = "telephone")
 	@NotBlank
 	@Digits(fraction = 0, integer = 10)
@@ -89,7 +92,6 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
-	 *
 	 * @param name to test
 	 * @return a pet if pet name is already in use
 	 */
@@ -99,7 +101,6 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given id, or null if none found for this Owner.
-	 *
 	 * @param id to test
 	 * @return a pet if pet id is already in use
 	 */
@@ -117,7 +118,6 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
-	 *
 	 * @param name to test
 	 * @return a pet if pet name is already in use
 	 */
@@ -148,7 +148,6 @@ public class Owner extends Person {
 
 	/**
 	 * Adds the given {@link Visit} to the {@link Pet} with the given identifier.
-	 *
 	 * @param petId the identifier of the {@link Pet}, must not be {@literal null}.
 	 * @param visit the visit to add, must not be {@literal null}.
 	 */
