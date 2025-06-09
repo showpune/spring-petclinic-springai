@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.5</version>
+    <version>3.4.6</version>
   </parent>
   <name>petclinic-langchain4j</name>
 
@@ -27,14 +27,14 @@
     <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
-    <checkstyle.version>10.16.0</checkstyle.version>
+    <checkstyle.version>10.20.2</checkstyle.version>
     <jacoco.version>0.8.12</jacoco.version>
     <libsass.version>0.3.1</libsass.version>
     <lifecycle-mapping>1.0.0</lifecycle-mapping>
-    <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
+    <maven-checkstyle.version>3.5.0</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
-    <spring-format.version>0.0.41</spring-format.version>
-    <langchain4j.version>0.30.0</langchain4j.version>
+    <spring-format.version>0.0.43</spring-format.version>
+    <langchain4j.version>0.36.2</langchain4j.version>
 
   </properties>
 
@@ -43,7 +43,7 @@
       <dependency>
         <groupId>org.springframework.ai</groupId>
         <artifactId>spring-ai-bom</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -161,10 +161,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Temporarily disabled for upgrade testing
     <dependency>
       <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-azure-openai-spring-boot-starter</artifactId>
+      <artifactId>spring-ai-starter-model-azure-openai</artifactId>
     </dependency>
+    -->
 
   </dependencies>
 

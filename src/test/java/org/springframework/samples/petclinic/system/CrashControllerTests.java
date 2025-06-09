@@ -40,7 +40,7 @@ class CrashControllerTests {
 		});
 
 		assertEquals("Expected: controller used to showcase what happens when an exception is thrown",
-			thrown.getMessage());
+				thrown.getMessage());
 	}
 
 }
